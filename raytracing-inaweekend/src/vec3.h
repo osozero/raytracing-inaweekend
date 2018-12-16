@@ -101,6 +101,11 @@ inline vec3 operator*(const vec3 &v1, float f)
 	return vec3(v1.e[0] * f, v1.e[1] * f, v1.e[2] * f);
 }
 
+inline vec3 operator*(float f, const vec3 &v1)
+{
+	return v1 * f;
+}
+
 inline vec3 operator/(const vec3 &v1, float f)
 {
 	return vec3(v1.e[0] / f, v1.e[1] / f, v1.e[2] / f);
@@ -120,7 +125,7 @@ inline vec3 cross(const vec3 &v1, const vec3 &v2)
 				, v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0]);
 }
 
-inline vec3 unit_vector(vec3 &v)
+inline vec3 unit_vector(vec3 v)
 {
 	return v / v.length();
 }

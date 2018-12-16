@@ -115,9 +115,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ray.h" />
     <ClInclude Include="src\vec3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ray.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\vec3.cpp" />
   </ItemGroup>

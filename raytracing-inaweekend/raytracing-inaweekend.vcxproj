@@ -115,10 +115,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="vec3.h" />
+    <ClInclude Include="src\vec3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="vec3.cpp" />
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\vec3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

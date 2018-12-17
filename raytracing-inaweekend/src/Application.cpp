@@ -1,46 +1,20 @@
 #include <iostream>
 #include "vec3.h"
 #include "ray.h"
+#include "hitable.h"
+#include "sphere.h"
+#include "hitable_list.h"
+#include <limits>
 
-//dot((p-c),(p-c)) = R*R
-// dot(p(t)-c,p(t)-c))=R*R
-//p(t) = A + t*B; (point_at_parameter (ray.h)) A=center of ray, B= direction
-// dot((A+t*B-C), (A+t*B-C)) = R*R // R= radius of sphere
-//t*t*dot(B,B)+2*t*dot(B,A-C)+dot(A-C,A-C) - R*R = 0
-// calculate discriminant
-float hit_sphere(const vec3 &center, float radius, const ray &r)
+
+vec3 color(const ray& r,hitable *world)
 {
-	//C = A - C = center of ray - Center
-	vec3 oc = r.origin() - center;
+	
+	hit_record rec;
 
-	float a = dot(r.direction(), r.direction());
-	float b = 2 * dot(r.direction(), oc);
-	float c = dot(oc, oc) - radius * radius;
-
-	//discriminant = b*b - 4*a*c; if discriminant >0 then there is 2 solution, if disc=0  then there is 1 solution, if disc<0 then there is no real solution.
-	float discriminant = b * b - 4 * a*c;
-
-
-	//if disc==0 then ray is tangent(teget) with the sphere, if disc>0 then ray hits the sphere
-
-	if(discriminant<0)
+	if(world->hit(r,0.0,std::numeric_limits<float>::max(),rec))
 	{
-		return -1.0f;
-	}
-
-	return (-b - sqrt(discriminant)) / (2.0*a);
-}
-
-vec3 color(const ray& r)
-{
-	float hit_point = hit_sphere(vec3(0.0, 0.0, -1.0f), 0.5, r);
-
-	if(hit_point > 0.0f)
-	{
-		//calculates normal by hit point, Normal = direction of hitpoint - center of sphere)
-		vec3 N = unit_vector(r.point_at_parameter(hit_point) - vec3(0.0, 0.0, -1.0));
-
-		return 0.5*vec3(N.x() + 1, N.y() + 1, N.z() + 1);
+		return 0.5*vec3(rec.normal.x() + 1, rec.normal.y() + 1, rec.normal.z() + 1);
 	}
 
 	vec3 unit_direction = unit_vector(r.direction());
@@ -64,6 +38,13 @@ int main()
 
 	vec3 origin(0.0f, 0.0f, 0.0f);
 
+	hitable *list[2];
+
+	list[0] = new sphere(vec3(0.0, 0.0, -1.0), 0.5);
+	list[1] = new sphere(vec3(0.0, -100.5, -1.0), 100);
+
+	hitable *world = new hitable_list(list, 2);
+
 	for(int j=ny-1;j>=0;j--)
 	{
 		for(int i=0;i<nx;i++)
@@ -73,7 +54,10 @@ int main()
 
 			ray r(origin, lower_left_corner + u * horizontal + v * vertical);
 
-			vec3 col = color(r);
+			vec3 p = r.point_at_parameter(2.0);
+
+			vec3 col = color(r,world);
+
 			
 			int ir = int(255.99*col[0]);
 			int ig = int(255.99*col[1]);

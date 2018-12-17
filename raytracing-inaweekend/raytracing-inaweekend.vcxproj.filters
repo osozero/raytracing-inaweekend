@@ -21,6 +21,9 @@
     <ClInclude Include="src\ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\hitable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\vec3.cpp">

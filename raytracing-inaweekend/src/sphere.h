@@ -7,6 +7,7 @@ class sphere
 public:
 	vec3 center;
 	float radius;
+
 	sphere(){};
 	sphere(vec3 cen, float r) :center{ cen }, radius(r){};
 

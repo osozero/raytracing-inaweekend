@@ -1,7 +1,7 @@
 #include "vec3.h"
 
 
-vec3& vec3::operator+=(const vec3& v2)
+vec3& vec3::operator+=(const vec3&  v2)
 {
 	this->e[0] += v2.e[0];
 	this->e[1] += v2.e[1];
@@ -46,7 +46,7 @@ vec3& vec3::operator*=(const float f)
 	return *this;
 }
 
-vec3& vec3::operator/=(const float f)
+vec3& vec3::operator/=(float f)
 {
 	this->e[0] /= f;
 	this->e[1] /= f;

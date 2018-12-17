@@ -6,7 +6,9 @@ class vec3
 {
 public:
 	float e[3];
-	vec3(){};
+	vec3(): e{}
+	{
+	};
 
 	vec3(float e0,float e1,float e2)
 	{
@@ -42,12 +44,12 @@ public:
 		return e[i];
 	}
 
-	inline vec3& operator+=(const vec3 &v2);
-	inline vec3& operator-=(const vec3 &v2);
-	inline vec3& operator*=(const vec3 &v2);
-	inline vec3& operator/=(const vec3 &v2);
-	inline vec3& operator*=(const float f);
-	inline vec3& operator/=(const float f);
+	vec3& operator+=(const vec3 &v2);
+	vec3& operator-=(const vec3 &v2);
+	vec3& operator*=(const vec3 &v2);
+	vec3& operator/=(const vec3 &v2);
+	vec3& operator*=(float f);
+	vec3& operator/=(float f);
 
 	inline float length() const
 	{
@@ -59,7 +61,7 @@ public:
 		return e[0] * e[0] + e[1] * e[1] + e[2] * e[2];
 	}
 
-	inline void make_unit_vector();
+	void make_unit_vector();
 };
 
 //non member inline functions

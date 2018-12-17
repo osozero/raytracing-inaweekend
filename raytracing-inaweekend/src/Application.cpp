@@ -8,7 +8,7 @@
 // dot((A+t*B-C), (A+t*B-C)) = R*R // R= radius of sphere
 //t*t*dot(B,B)+2*t*dot(B,A-C)+dot(A-C,A-C) - R*R = 0
 // calculate discriminant
-bool hit_sphere(const vec3 &center, float radius, const ray &r)
+float hit_sphere(const vec3 &center, float radius, const ray &r)
 {
 	//C = A - C = center of ray - Center
 	vec3 oc = r.origin() - center;
@@ -22,14 +22,25 @@ bool hit_sphere(const vec3 &center, float radius, const ray &r)
 
 
 	//if disc==0 then ray is tangent(teget) with the sphere, if disc>0 then ray hits the sphere
-	return discriminant > 0;
+
+	if(discriminant<0)
+	{
+		return -1.0f;
+	}
+
+	return (-b - sqrt(discriminant)) / (2.0*a);
 }
 
 vec3 color(const ray& r)
 {
-	if(hit_sphere(vec3(0,0,1),0.5,r))
+	float hit_point = hit_sphere(vec3(0.0, 0.0, -1.0f), 0.5, r);
+
+	if(hit_point > 0.0f)
 	{
-		return vec3(1.0, 0.0, 0.0);
+		//calculates normal by hit point, Normal = direction of hitpoint - center of sphere)
+		vec3 N = unit_vector(r.point_at_parameter(hit_point) - vec3(0.0, 0.0, -1.0));
+
+		return 0.5*vec3(N.x() + 1, N.y() + 1, N.z() + 1);
 	}
 
 	vec3 unit_direction = unit_vector(r.direction());
